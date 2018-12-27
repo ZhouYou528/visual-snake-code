@@ -3,37 +3,20 @@
 const vscode = require('vscode');
 
 var editor;
-var direction = 'up';
+var direction;
 var oldTail;
 var maxX;
 var minX;
 var maxY;
 var minY;
-var snake = [];
-var endGame = false;
+var snake;
+var endGame;
 var line;
 var foodX;
 var foodY;
-var foodExist = false;
-var reset = false;
-var points = [
-	{
-		x: 10,
-		y: 31
-	}, {
-		x: 11,
-		y: 31
-	}, {
-		x: 12,
-		y: 31
-	}, {
-		x: 13,
-		y: 31
-	}, {
-		x: 14,
-		y: 31
-	}
-];
+var foodExist;
+var reset;
+var points;
 //21*30 area from [1,1] to [61, 61] 
 var startScreen = [
 	'╔══════════════════════════════════════════════════════════════╗\n',
@@ -150,8 +133,10 @@ function gameEngine() {
 		editor.edit((ed) => {
 			printEndScreen(ed);
 			keyInput(ed, editor.document);
+			
+			
 			resetGame();
-		})//.then(() => setTimeout(gameEngine, 200));
+		 })//.then(() => setTimeout(gameEngine, 200));
 	}
 }
 
@@ -287,6 +272,29 @@ function activate(context) {
 		minY = 1;
 		maxX = 21;
 		maxY = 61;
+		reset = false;
+		endGame = false;
+		foodExist = false;
+		direction = 'up';
+		snake = [];
+		points = [
+			{
+				x: 10,
+				y: 31
+			}, {
+				x: 11,
+				y: 31
+			}, {
+				x: 12,
+				y: 31
+			}, {
+				x: 13,
+				y: 31
+			}, {
+				x: 14,
+				y: 31
+			}
+		];
 		editor = vscode.window.activeTextEditor;
 		editor.edit((e) => gameInit(e)).then(gameEngine);
 		// Display a message box to the user
