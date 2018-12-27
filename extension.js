@@ -90,6 +90,7 @@ var endScreen = [
 ];
 
 function gameInit(ed) {
+	clearScreen(ed, editor.document);
 	for(var i = 0; i < startScreen.length; i++) {
 		ed.insert(new vscode.Position(i, 0), startScreen[i]);
 	}
