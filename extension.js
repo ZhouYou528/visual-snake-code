@@ -3,7 +3,7 @@
 const vscode = require('vscode');
 
 var editor;
-var direction = 90;
+var direction = 'up';
 var oldTail;
 var maxX;
 var minX;
@@ -45,11 +45,11 @@ var borders = [
     '║                                                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
-    '║                                                              ║\n',
-    '║                                                              ║\n',
-    '║                                                              ║\n',
-    '║                                                              ║\n',
-    '║                                                              ║\n',
+    '║                              ██                              ║\n',
+    '║                              ██                              ║\n',
+    '║                              ██                              ║\n',
+    '║                              ██                              ║\n',
+    '║                              ██                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
@@ -79,11 +79,11 @@ function keyInput(ed, doc) {
 	line = doc.lineCount - 1;
 	var command = doc.lineAt(line).text;
 	var i = command.length - 1;
-	if(direction != 270 && command[i] == 'w') direction = 90;
-	else if(direction != 0 && command[i] == 'a') direction = 180;
-	else if(direction != 90 && command[i] == 's') direction = 270;
-	else if(direction != 180 && command[i] == 'd') direction = 0;
-
+	if(direction != 'down' && command[i] == 'w') direction = 'up';
+	else if(direction != 'right' && command[i] == 'a') direction = 'left';
+	else if(direction != 'up' && command[i] == 's') direction = 'down';
+	else if(direction != 'left' && command[i] == 'd') direction = 'right';
+	//remove input char
 	ed.replace(
 		new vscode.Range(
 			new vscode.Position(line, 0),
@@ -98,15 +98,16 @@ function createFood(ed) {
 	foodY = randomPos(1, 61);
 	if(foodY % 2 == 0) foodY -= 1;
 	if(snake[foodX][foodY] == 1) {
-		createFood();
+		createFood(ed);
+	} else {
+		ed.replace(
+			new vscode.Range(
+				new vscode.Position(foodX, foodY),
+				new vscode.Position(foodX, foodY + 2)
+			),'██'
+		);
+		foodExist = true;
 	}
-	ed.replace(
-		new vscode.Range(
-			new vscode.Position(foodX, foodY),
-			new vscode.Position(foodX, foodY + 2)
-		),'██'
-	);
-	foodExist = true;
 }
 
 function gameRender() {
@@ -118,20 +119,19 @@ function gameRender() {
 			screenRender(ed);
 		}).then(() => setTimeout(gameRender, 200));
 	} else {
-
+		//TODO: end screen
 	}
 }
 
 function screenRender(ed) {
-	for(let point of points) {
-		ed.replace(
-			new vscode.Range(
-				new vscode.Position(point.x, point.y),
-				new vscode.Position(point.x, point.y + 2)
-			),'██'
-		);
-		snake[point.x][point.y] = 1;
-	}
+	ed.replace(
+		new vscode.Range(
+			new vscode.Position(points[0].x, points[0].y),
+			new vscode.Position(points[0].x, points[0].y + 2)
+		),'██'
+	);
+	snake[points[0].x][points[0].y] = 1;
+	
 	ed.replace(
 		new vscode.Range(
 			new vscode.Position(oldTail.x, oldTail.y),
@@ -154,25 +154,25 @@ function eatFood(head) {
 }
 
 function playerMove() {
-	if(direction == 0) {
+	if(direction == 'right') {
 		var head = {
 			x: points[0].x,
 			y: points[0].y + 2
 		}
 		eatFood(head);
-	} else if(direction == 90) {
+	} else if(direction == 'up') {
 		var head = {
 			x: points[0].x - 1,
 			y: points[0].y
 		}
 		eatFood(head);
-	} else if(direction == 180) {
+	} else if(direction == 'left') {
 		var head = {
 			x: points[0].x,
 			y: points[0].y - 2
 		}
 		eatFood(head);
-	} else if(direction == 270) {
+	} else if(direction == 'down') {
 		var head = {
 			x: points[0].x + 1,
 			y: points[0].y
@@ -182,7 +182,7 @@ function playerMove() {
 }
 
 function randomPos(min, max) {
-	return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function validatePos(head) {
