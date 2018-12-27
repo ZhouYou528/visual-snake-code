@@ -1,6 +1,6 @@
 # visual-snake-code README
 
-This game is a old school snake game that runs as a VS Code extension. Please read the requirements before using.
+This game is an old school snake game that runs as a VS Code extension. Please read the requirements before using.
 
 ## Features
 
@@ -12,7 +12,7 @@ Screenshot 2:
 
 ## Requirements
 
-After installing the extension. Open a new file and press Ctrl(Command) + shift + p to open the shortcut for command. Then type 'Visual Snake Code', then press enter the game will start. Attention: It's important to open a new file, because the original content in the file will be overwritten and my not be recovered. 
+After installing the extension. Open a new file and press Ctrl(Command) + shift + p to open the shortcut for command. Type 'Visual Snake Code', then press enter the game will start. Attention: It's important to open a new file, because the original content in the file will be overwritten and may not be recovered. 
 
 A suggestion is that you can disable editor.quickSuggestions to prevent the intellisense popping up every time when you press a key.
 
