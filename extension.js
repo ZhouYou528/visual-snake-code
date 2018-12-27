@@ -12,6 +12,9 @@ var minY;
 var snake = [];
 var endGame = false;
 var line;
+var foodX;
+var foodY;
+var foodExist = false;
 var points = [
 	{
 		x: 10,
@@ -25,6 +28,9 @@ var points = [
 	}, {
 		x: 13,
 		y: 31
+	}, {
+		x: 14,
+		y: 31
 	}
 ];
 //21*30 area from [1,1] to [61, 61] 
@@ -37,7 +43,7 @@ var borders = [
     '║                                                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
-    '║                                                              ║ SCORE: 0000\n',
+    '║                                                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
@@ -64,6 +70,9 @@ function gameInit(ed) {
 			snake[x][y] = 0;
 		}
 	}
+	for(let point of points) {
+		snake[point.x][point.y] = 1;
+	}
 }
 
 function keyInput(ed, doc) {
@@ -83,10 +92,28 @@ function keyInput(ed, doc) {
 	);
 }
 
+function createFood(ed) {
+	if(foodExist) return;
+	foodX = randomPos(1, 21);
+	foodY = randomPos(1, 61);
+	if(foodY % 2 == 0) foodY -= 1;
+	if(snake[foodX][foodY] == 1) {
+		createFood();
+	}
+	ed.replace(
+		new vscode.Range(
+			new vscode.Position(foodX, foodY),
+			new vscode.Position(foodX, foodY + 2)
+		),'██'
+	);
+	foodExist = true;
+}
+
 function gameRender() {
 	if(!endGame) {
 		editor.edit((ed) => {
 			keyInput(ed, editor.document);
+			createFood(ed);
 			playerMove();
 			screenRender(ed);
 		}).then(() => setTimeout(gameRender, 200));
@@ -114,55 +141,62 @@ function screenRender(ed) {
 	snake[oldTail.x][oldTail.y] = 0;
 }
 
-function playerMove() {
-	if(direction == 0) {
-		var head = {
-			x: points[0].x,
-			y: points[0].y + 2
-		}
-		if(validatePos(head)) {
+function eatFood(head) {
+	if(validatePos(head)) {
+		if(head.x == foodX && head.y == foodY) {
 			points.unshift(head);
-			oldTail = points.pop();
-		}
-	} else if(direction == 90) {
-		var head = {
-			x: points[0].x - 1,
-			y: points[0].y
-		}
-		if(validatePos(head)) {
-			points.unshift(head);
-			oldTail = points.pop();
-		}
-	} else if(direction == 180) {
-		var head = {
-			x: points[0].x,
-			y: points[0].y - 2
-		}
-		if(validatePos(head)) {
-			points.unshift(head);
-			oldTail = points.pop();
-		}
-	} else if(direction == 270) {
-		var head = {
-			x: points[0].x + 1,
-			y: points[0].y
-		}
-		if(validatePos(head)) {
+			foodExist = false;
+		} else {
 			points.unshift(head);
 			oldTail = points.pop();
 		}
 	}
 }
 
+function playerMove() {
+	if(direction == 0) {
+		var head = {
+			x: points[0].x,
+			y: points[0].y + 2
+		}
+		eatFood(head);
+	} else if(direction == 90) {
+		var head = {
+			x: points[0].x - 1,
+			y: points[0].y
+		}
+		eatFood(head);
+	} else if(direction == 180) {
+		var head = {
+			x: points[0].x,
+			y: points[0].y - 2
+		}
+		eatFood(head);
+	} else if(direction == 270) {
+		var head = {
+			x: points[0].x + 1,
+			y: points[0].y
+		}
+		eatFood(head);
+	}
+}
+
+function randomPos(min, max) {
+	return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+}
+
 function validatePos(head) {
-	if(head.x < minX || head.x > maxX || head.y < minY || head.y > maxY) {
+	if(head.x < minX || head.x > maxX || head.y < minY || head.y > maxY || eatSelf(head)) {
 		endGame = true;
 		return false;
 	} 
 	return true;
 }
 
-
+function eatSelf(head) {
+	if(snake[head.x][head.y] == 1) return true;
+	return false;
+}
 
 
 
