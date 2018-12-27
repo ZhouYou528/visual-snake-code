@@ -110,7 +110,7 @@ function keyInput(ed, doc) {
 	else if(direction != 'right' && command[i] == 'a') direction = 'left';
 	else if(direction != 'up' && command[i] == 's') direction = 'down';
 	else if(direction != 'left' && command[i] == 'd') direction = 'right';
-	else if(command[i] == ' ') reset = true;
+	else if(endGame && command[i] == ' ') reset = true;
 	//remove input char
 	ed.replace(
 		new vscode.Range(
