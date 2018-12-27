@@ -30,4 +30,8 @@ Sometimes the tail pixel doesn't function well, it drops. This bug is to be fixe
 
 Initial release of Visual Snake Code.
 
+### 1.0.1
+
+Add Change Log and Repository.
+
 **Enjoy!**
