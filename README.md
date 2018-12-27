@@ -1,14 +1,14 @@
 # visual-snake-code README
 
-This game is a old school snake game that runs as a VS Code extension. 
+This game is a old school snake game that runs as a VS Code extension. Please read the requirements before using.
 
 ## Features
 
 Press 'w' to go up, similarly 's' for down, 'a' for left, 'd' for right. At the end screen, you can press space to restart a game.
 Screenshot 1:
-![gameplay1](screenshot/gameplay1.png\)
+![gameplay1](screenshot/gameplay1.png)
 Screenshot 2:
-![gameplay2](screenshot/gameplay2.png\)
+![gameplay2](screenshot/gameplay2.png)
 
 ## Requirements
 
