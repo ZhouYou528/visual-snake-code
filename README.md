@@ -5,9 +5,9 @@ This game is an old school snake game that runs as a VS Code extension. Please r
 ## Features
 
 Press 'w' to go up, similarly 's' for down, 'a' for left, 'd' for right. At the end screen, you can press space to restart a game.
-Screenshot 1:
+### Screenshot 1:
 ![gameplay1](screenshot/gameplay1.png)
-Screenshot 2:
+### Screenshot 2:
 ![gameplay2](screenshot/gameplay2.png)
 
 ## Requirements
