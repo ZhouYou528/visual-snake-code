@@ -16,7 +16,24 @@ var foodX;
 var foodY;
 var foodExist;
 var reset;
-var points;
+var points = [
+	{
+		x: 10,
+		y: 31
+	}, {
+		x: 11,
+		y: 31
+	}, {
+		x: 12,
+		y: 31
+	}, {
+		x: 13,
+		y: 31
+	}, {
+		x: 14,
+		y: 31
+	}
+];
 //21*30 area from [1,1] to [61, 61] 
 var startScreen = [
 	'╔══════════════════════════════════════════════════════════════╗\n',
@@ -133,10 +150,8 @@ function gameEngine() {
 		editor.edit((ed) => {
 			printEndScreen(ed);
 			keyInput(ed, editor.document);
-			
-			
 			resetGame();
-		 })//.then(() => setTimeout(gameEngine, 200));
+		 }).then(() => setTimeout(gameEngine, 200));
 	}
 }
 
@@ -232,6 +247,25 @@ function resetGame() {
 		endGame = false;
 		foodExist = false;
 		direction = 'up';
+		snake = [];
+		points = [
+			{
+				x: 10,
+				y: 31
+			}, {
+				x: 11,
+				y: 31
+			}, {
+				x: 12,
+				y: 31
+			}, {
+				x: 13,
+				y: 31
+			}, {
+				x: 14,
+				y: 31
+			}
+		];
 		editor.edit((ed) => {
 			clearScreen(ed, editor.document);
 		}).then(() => {
