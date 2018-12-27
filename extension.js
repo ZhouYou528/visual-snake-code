@@ -34,7 +34,7 @@ var points = [
 	}
 ];
 //21*30 area from [1,1] to [61, 61] 
-var borders = [
+var startScreen = [
 	'╔══════════════════════════════════════════════════════════════╗\n',
     '║                                                              ║\n',
     '║                                                              ║\n',
@@ -61,8 +61,8 @@ var borders = [
 ];
 
 function gameInit(ed) {
-	for(var i = 0; i < borders.length; i++) {
-		ed.insert(new vscode.Position(i, 0), borders[i]);
+	for(var i = 0; i < startScreen.length; i++) {
+		ed.insert(new vscode.Position(i, 0), startScreen[i]);
 	}
 	for(var x = 1; x <= 21; x++) {
 		snake[x] = [];
