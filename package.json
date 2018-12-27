@@ -27,7 +27,7 @@
 		"postinstall": "node ./node_modules/vscode/bin/install",
 		"test": "node ./node_modules/vscode/bin/test"
 	},
-	"repository": "git://github.com/ZhouYou528/visual-snake-code",
+	"repository": "https://github.com/ZhouYou528/visual-snake-code",
 	"devDependencies": {
 		"typescript": "^3.1.4",
 		"vscode": "^1.1.25",
