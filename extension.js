@@ -15,6 +15,7 @@ var line;
 var foodX;
 var foodY;
 var foodExist = false;
+var reset = false;
 var points = [
 	{
 		x: 10,
@@ -60,6 +61,32 @@ var startScreen = [
     '╚══════════════════════════════════════════════════════════════╝\n'
 ];
 
+var endScreen = [
+	'╔══════════════════════════════════════════════════════════════╗',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║            ████        ██      ██    ██   ██ ██ ██           ║',
+    '║          ██          ██  ██    ██ ██ ██   ██                 ║',
+    '║          ██    ██   ██    ██   ██    ██   ██ ██ ██           ║',
+    '║          ██    ██   ██ ██ ██   ██    ██   ██                 ║',
+    '║            ████     ██    ██   ██    ██   ██ ██ ██           ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║            ████     ██    ██   ██ ██ ██   ██ ██ █            ║',
+    '║          ██    ██   ██    ██   ██         ██    ██           ║',
+    '║          ██    ██   ██    ██   ██ ██ ██   ██ ██ █            ║',
+    '║          ██    ██   ██    ██   ██         ██   ██            ║',
+    '║            ████        ██      ██ ██ ██   ██    ██           ║',                         
+    '║                                                              ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '║                                                              ║',
+    '╚══════════════════════════════════════════════════════════════╝'
+];
+
 function gameInit(ed) {
 	for(var i = 0; i < startScreen.length; i++) {
 		ed.insert(new vscode.Position(i, 0), startScreen[i]);
@@ -83,6 +110,7 @@ function keyInput(ed, doc) {
 	else if(direction != 'right' && command[i] == 'a') direction = 'left';
 	else if(direction != 'up' && command[i] == 's') direction = 'down';
 	else if(direction != 'left' && command[i] == 'd') direction = 'right';
+	else if(command[i] == ' ') reset = true;
 	//remove input char
 	ed.replace(
 		new vscode.Range(
@@ -110,16 +138,20 @@ function createFood(ed) {
 	}
 }
 
-function gameRender() {
+function gameEngine() {
 	if(!endGame) {
 		editor.edit((ed) => {
 			keyInput(ed, editor.document);
 			createFood(ed);
 			playerMove();
 			screenRender(ed);
-		}).then(() => setTimeout(gameRender, 200));
+		}).then(() => setTimeout(gameEngine, 200));
 	} else {
-		//TODO: end screen
+		editor.edit((ed) => {
+			printEndScreen(ed);
+			keyInput(ed, editor.document);
+			resetGame();
+		})//.then(() => setTimeout(gameEngine, 200));
 	}
 }
 
@@ -198,10 +230,42 @@ function eatSelf(head) {
 	return false;
 }
 
+function printEndScreen(ed) {
+	for(let i = 0; i < endScreen.length; i++) {
+		ed.replace(
+			new vscode.Range(
+				new vscode.Position(i, 0),
+				new vscode.Position(i, 64)
+			), endScreen[i]
+		);
+	}
+}
 
+function resetGame() {
+	if(reset) {
+		reset = false;
+		endGame = false;
+		foodExist = false;
+		direction = 'up';
+		editor.edit((ed) => {
+			clearScreen(ed, editor.document);
+		}).then(() => {
+			editor.edit((ed) => {
+				gameInit(ed);
+			});
+		});
+	}
+}
 
-
-
+function clearScreen(ed, doc) {
+	var last = doc.lineCount - 1;
+	ed.delete(
+		new vscode.Range(
+			new vscode.Position(0, 0),
+			new vscode.Position(last, 99999)
+		)
+	);
+}
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -224,7 +288,7 @@ function activate(context) {
 		maxX = 21;
 		maxY = 61;
 		editor = vscode.window.activeTextEditor;
-		editor.edit((e) => gameInit(e)).then(gameRender);
+		editor.edit((e) => gameInit(e)).then(gameEngine);
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Visual Snake Code!');
 	});
