@@ -5,3 +5,6 @@
 
 ## [1.0.1]
 - Add Change Log and Repository
+
+## [1.0.2]
+- Minor fixes

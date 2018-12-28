@@ -34,4 +34,8 @@ Initial release of Visual Snake Code.
 
 Add Change Log and Repository.
 
+### 1.0.2
+
+Minor fixes.
+
 **Enjoy!**
