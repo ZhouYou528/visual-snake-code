@@ -147,8 +147,11 @@ function gameEngine() {
 			keyInput(ed, editor.document);
 			createFood(ed);
 			playerMove();
-			screenRender(ed);
-		}).then(() => setTimeout(gameEngine, 200));
+		})
+		.then(() => {
+			editor.edit((ed) => screenRender(ed));
+		})
+		.then(() => setTimeout(gameEngine, 200));
 	} else {
 		editor.edit((ed) => {
 			printEndScreen(ed);
