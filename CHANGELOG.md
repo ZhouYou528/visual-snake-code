@@ -8,3 +8,6 @@
 
 ## [1.0.2]
 - Minor fixes
+
+## [1.0.3]
+- Fix a bug that tail drops sometimes

@@ -38,4 +38,8 @@ Add Change Log and Repository.
 
 Minor fixes.
 
+### 1.0.3
+
+Fix a bug that tail drops sometimes.
+
 **Enjoy!**
