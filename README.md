@@ -12,7 +12,7 @@ Press 'w' to go up, similarly 's' for down, 'a' for left, 'd' for right. At the 
 
 ## Requirements
 
-After installing the extension. Open a new file and press Ctrl(Command) + shift + p to open the shortcut for command. Type 'Visual Snake Code', then press enter the game will start. Attention: It's important to open a new file, because the original content in the file will be overwritten and may not be recovered. 
+After installing the extension, press Ctrl(Command) + shift + p to open the shortcut for command. Type 'Visual Snake Code', then press enter the game will start. 
 
 A suggestion is that you can disable editor.quickSuggestions to prevent the intellisense popping up every time when you press a key.
 
@@ -41,5 +41,8 @@ Minor fixes.
 ### 1.0.3
 
 Fix a bug that tail drops sometimes.
+
+### 1.0.4
+Open new empty text document for the game. Thanks to @spoon611
 
 **Enjoy!**

@@ -11,3 +11,6 @@
 
 ## [1.0.3]
 - Fix a bug that tail drops sometimes
+
+## [1.0.4]
+- Open new empty text document for the game. Thanks to @spoon611
