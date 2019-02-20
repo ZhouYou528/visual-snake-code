@@ -335,8 +335,14 @@ function activate(context) {
 				y: 31
 			}
 		];
-		editor = vscode.window.activeTextEditor;
-		editor.edit((e) => gameInit(e)).then(gameEngine);
+
+		vscode.workspace.openTextDocument().then(newDocument => {
+			vscode.window.showTextDocument(newDocument).then(newTextEditor => {
+				editor = newTextEditor;
+				editor.edit((e) => gameInit(e)).then(gameEngine);
+			});
+		});
+
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Visual Snake Code!');
 	});
