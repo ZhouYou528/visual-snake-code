@@ -34,6 +34,9 @@ var points = [
 		y: 31
 	}
 ];
+var scoreStatusBarItem;
+var score;
+
 //21*30 area from [1,1] to [61, 61] 
 var startScreen = [
 	'╔══════════════════════════════════════════════════════════════╗\n',
@@ -184,6 +187,7 @@ function eatFood(head) {
 		if(head.x == foodX && head.y == foodY) {
 			points.unshift(head);
 			foodExist = false;
+			updateScore();
 		} else {
 			points.unshift(head);
 			oldTail = points.pop();
@@ -283,6 +287,7 @@ function resetGame() {
 }
 
 function clearScreen(ed, doc) {
+	updateScore(0);
 	var last = doc.lineCount - 1;
 	ed.delete(
 		new vscode.Range(
@@ -291,6 +296,26 @@ function clearScreen(ed, doc) {
 		)
 	);
 }
+
+function updateScore(value) {
+	if(value !== undefined) {
+		score = parseInt(value);
+	}
+	else {
+		score += 1;		
+	}
+
+	if(scoreStatusBarItem) {
+		scoreStatusBarItem.text = "Score: " + score;
+	}
+}
+
+function initializeScoreStatusBarItem() {
+	scoreStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	scoreStatusBarItem.tooltip = "Current game score";
+	scoreStatusBarItem.show();
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -347,6 +372,7 @@ function activate(context) {
 		vscode.window.showInformationMessage('Visual Snake Code!');
 	});
 
+	initializeScoreStatusBarItem();
 	context.subscriptions.push(disposable);
 }
 exports.activate = activate;
