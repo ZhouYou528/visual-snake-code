@@ -287,7 +287,7 @@ function resetGame() {
 }
 
 function clearScreen(ed, doc) {
-	updateScore(0);
+	resetScore();
 	var last = doc.lineCount - 1;
 	ed.delete(
 		new vscode.Range(
@@ -297,14 +297,17 @@ function clearScreen(ed, doc) {
 	);
 }
 
-function updateScore(value) {
-	if(value !== undefined) {
-		score = parseInt(value);
-	}
-	else {
-		score += 1;		
-	}
+function updateScore() {
+	score += 1;	
+	updateScoreStatusBarItem();
+}
 
+function resetScore() {
+	score = 0;
+	updateScoreStatusBarItem()
+}
+
+function updateScoreStatusBarItem() {
 	if(scoreStatusBarItem) {
 		scoreStatusBarItem.text = "Score: " + score;
 	}
