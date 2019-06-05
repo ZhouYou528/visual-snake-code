@@ -1,38 +1,38 @@
 {
-	"name": "visual-snake-code",
-	"displayName": "Visual Snake Code",
-	"description": "An old school snake game that runs on VS Code",
-	"version": "1.0.4",
-	"publisher": "ZhouSir",
-	"icon": "screenshot/snake-icon.png",
-	"engines": {
-		"vscode": "^1.30.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.vSnakeCode"
-	],
-	"main": "./extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.vSnakeCode",
-				"title": "Visual Snake Code"
-			}
-		]
-	},
-	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "node ./node_modules/vscode/bin/test"
-	},
-	"repository": "https://github.com/ZhouYou528/visual-snake-code",
-	"devDependencies": {
-		"typescript": "^3.1.4",
-		"vscode": "^1.1.25",
-		"eslint": "^4.11.0",
-		"@types/node": "^8.10.25",
-		"@types/mocha": "^2.2.42"
-	}
+  "name": "visual-snake-code",
+  "displayName": "Visual Snake Code",
+  "description": "An old school snake game that runs on VS Code",
+  "version": "1.0.4",
+  "publisher": "ZhouSir",
+  "icon": "screenshot/snake-icon.png",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.vSnakeCode"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.vSnakeCode",
+        "title": "Visual Snake Code"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "repository": "https://github.com/ZhouYou528/visual-snake-code",
+  "devDependencies": {
+    "typescript": "^3.1.4",
+    "vscode": "^1.1.25",
+    "eslint": "^4.11.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  }
 }
