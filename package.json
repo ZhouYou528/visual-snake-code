@@ -2,7 +2,7 @@
   "name": "visual-snake-code",
   "displayName": "Visual Snake Code",
   "description": "An old school snake game that runs on VS Code",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "ZhouSir",
   "icon": "screenshot/snake-icon.png",
   "engines": {
