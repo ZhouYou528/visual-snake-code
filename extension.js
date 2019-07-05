@@ -36,6 +36,8 @@ var points = [
 ];
 var scoreStatusBarItem;
 var score;
+var extensionState;
+var highScoreStatusBarItem;
 
 //21*30 area from [1,1] to [61, 61] 
 var startScreen = [
@@ -303,6 +305,10 @@ function updateScore() {
 }
 
 function resetScore() {
+	if(score > extensionState.get("highscore", 0)) {
+		extensionState.update("highscore", score);
+		highScoreStatusBarItem.text = "$(star) " + score;
+	}
 	score = 0;
 	updateScoreStatusBarItem()
 }
@@ -317,6 +323,11 @@ function initializeScoreStatusBarItem() {
 	scoreStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 	scoreStatusBarItem.tooltip = "Current game score";
 	scoreStatusBarItem.show();
+
+	highScoreStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	highScoreStatusBarItem.tooltip = "Current highscore";
+	highScoreStatusBarItem.text = "$(star) " + extensionState.get("highscore", 0);
+	highScoreStatusBarItem.show();
 }
 
 // this method is called when your extension is activated
@@ -330,6 +341,7 @@ function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "visual-snake-code" is now active!');
+	extensionState = context.globalState;
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
