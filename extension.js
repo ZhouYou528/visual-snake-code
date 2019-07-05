@@ -308,6 +308,7 @@ function resetScore() {
 	if(score > extensionState.get("highscore", 0)) {
 		extensionState.update("highscore", score);
 		highScoreStatusBarItem.text = "$(star) " + score;
+		vscode.window.showInformationMessage(`You scored ${score}! New highscore ! 🎉`);
 	}
 	score = 0;
 	updateScoreStatusBarItem()
